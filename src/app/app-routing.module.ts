@@ -1,18 +1,20 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { CurrencyConverterComponent } from './layout/pages/currency-converter/currency-converter.component';
 import { HomeComponent } from './layout/pages/home/home.component';
 
 
 const routes: Routes = [
-  { path: 'currency-exchanger', component: HomeComponent },
+  { path: 'currency-converter', component: CurrencyConverterComponent },
+  { path: 'home', component: HomeComponent },
   {
     path: '',
-    redirectTo: 'currency-exchanger',
+    redirectTo: 'home',
     pathMatch: 'full',
   },
   {
     path: '**',
-    redirectTo: 'currency-exchanger',
+    redirectTo: 'home',
     pathMatch: 'full',
   },
 ];

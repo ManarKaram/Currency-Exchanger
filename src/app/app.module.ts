@@ -6,20 +6,26 @@ import { CurrencyExchangerComponent } from './shared/components/currency-exchang
 import { HomeComponent } from './layout/pages/home/home.component';
 import { CurrencyConverterComponent } from './layout/pages/currency-converter/currency-converter.component';
 import { consts } from './core/consts/consts.constant';
+import { HttpService } from './core/services/http.service';
+import { HttpClientModule } from '@angular/common/http';
+import { NgxLoadingModule } from 'ngx-loading';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     CurrencyExchangerComponent,
     HomeComponent,
-    CurrencyConverterComponent
+    CurrencyConverterComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ...consts
+    ...consts,
+    HttpClientModule,
+    ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [HttpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

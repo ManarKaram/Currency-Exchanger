@@ -1,56 +1,39 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
-import { ApiRequest } from '../interfaces/api-request'
-import { environment } from '../../../environments/environment';
 
+import { switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { environment } from 'src/environments/environment';
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class HttpService {
   // base URL stored in environment.ts
   baseURL = environment.url;
-
   constructor(
     private http: HttpClient // Inject httpClient
-  ) {
-    console.log(`Connected To: ${this.baseURL}`);
+  ) { }
+
+  // Post Request path , header <option>, data <option>
+  postReq(path: string, data?, header?): Observable<any> {
+    let obs: Observable<any>;
+    obs = this.http.post(`${this.baseURL}${path}`, data, header)
+    return obs;
   }
 
-  public request(req: ApiRequest): Observable<any> {
-    const absolute = req.path.match(
-      '^(http://|https://|http://|https://)[a-z0-9]+([-.]{1}[a-z0-9]+)*(:[0-9]{1,5})?(/.*)?$'
-    );
-    const apiUrl: string = absolute ? req.path : `${this.baseURL}${req.path}`;
-    const httpOptions = {
-      headers: new HttpHeaders(),
-    };
-    if (req.headers) {
-      // Handle Headers
-      req.headers.forEach((value: string, key: string) => {
-        httpOptions.headers = httpOptions.headers.set(key, value);
-      });
-    }
+  // Get Request path , header <option>
+  getReq(path: string, header?): Observable<any> {
+    return this.http.get(`${this.baseURL}${path}`, header);
+  }
 
-    // Handle Request
-    let obs: Observable<any>;
+  // Put Request path , header <option>, data <option>
+  putReq(path: string, header?, data?): Observable<any> {
+    return this.http.put(`${this.baseURL}${path}`, header, data);
+  }
 
-    // Backend workaround
-    req.payload = req.payload == null ? {} : req.payload;
-    if (req.method) {
-      obs = this.http.request(req.method, apiUrl, {
-        body: req.payload,
-        headers: httpOptions.headers,
-        observe: 'body',
-        params: req.params,
-      });
-    } else {
-      if (req.payload) {
-        obs = this.http.post(apiUrl, req.payload, httpOptions);
-      } else {
-        obs = this.http.get(apiUrl, httpOptions);
-      }
-    }
-    return obs;
+  // Delete Request path , header <option>, data <option>
+  deleteReq(path: string, data?): Observable<any> {
+    return this.http.delete(`${this.baseURL}${path}`, data);
   }
 }

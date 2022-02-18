@@ -36,6 +36,13 @@ export class CurrencyExchangerComponent implements OnInit {
   onSubmit() {
     console.log(this.convertCurrencyForm.value)
   }
-
+  swapCurrencies() {
+    let fromVal = this.convertCurrencyForm.value.from;
+    let toVal = this.convertCurrencyForm.value.to;
+    this.convertCurrencyForm.patchValue({
+      from: toVal,
+      to: fromVal
+    })
+  }
 
 }

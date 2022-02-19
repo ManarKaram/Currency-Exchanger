@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 
 import { switchMap } from 'rxjs/operators';
@@ -11,20 +11,25 @@ import { environment } from 'src/environments/environment';
 export class HttpService {
   // base URL stored in environment.ts
   baseURL = environment.url;
+  url = '';
   constructor(
     private http: HttpClient // Inject httpClient
   ) { }
 
   // Post Request path , header <option>, data <option>
   postReq(path: string, data?, header?): Observable<any> {
+
     let obs: Observable<any>;
-    obs = this.http.post(`${this.baseURL}${path}`, data, header)
+    obs = this.http.post(`${this.baseURL}${path}?access_key=${environment.access_key}`, data, header)
     return obs;
   }
 
   // Get Request path , header <option>
   getReq(path: string, header?): Observable<any> {
-    return this.http.get(`${this.baseURL}${path}`, header);
+   
+    let obs: Observable<any>;
+    obs = this.http.get(`${this.baseURL}${path}?access_key=${environment.access_key}`, header);
+    return obs;
   }
 
   // Put Request path , header <option>, data <option>

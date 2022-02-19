@@ -1,10 +1,11 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-const ACCESS_KEY = '5622e199b8c2fa5c585d4985f85021e7'
+
 export const environment = {
   production: false,
-  url: `http://data.fixer.io/api/latest?access_key=${ACCESS_KEY}`
+  access_key: '5622e199b8c2fa5c585d4985f85021e7',
+  url: `http://data.fixer.io/api/`
 };
 
 

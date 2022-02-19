@@ -19,7 +19,7 @@ export class CurrencyService {
     // open loading 
     this.loading$.next(true)
     // prepare request obj
-    let path = '';
+    let path = 'latest';
 
     this.httpService
       .getReq(path).pipe(take(1)).subscribe({
@@ -32,5 +32,22 @@ export class CurrencyService {
         }
       })
 
+  }
+  convertCurrency(data){
+    // open loading 
+    this.loading$.next(true)
+    // prepare request obj
+    let path = 'convert';
+    this.httpService
+      .getReq(path, {params: data}).pipe(take(1)).subscribe({
+        next: (res) => {
+          console.log(res)
+          // this.allCurrenciesSubject$.next(res.rates);
+
+          // close loading 
+          this.loading$.next(false)
+        }
+      })
+    // this.httpService.getReq('convert',{params: {...data}})
   }
 }
